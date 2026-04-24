@@ -76,6 +76,8 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"div">)
               src="/signup.jpg"
               alt="Signup background"
               fill
+              sizes="(max-width: 1024px) 100vw, (max-width: 1920px) 50vw, 33vw"
+              loading="eager"
               className="absolute inset-0 object-cover dark:brightness-[0.2] dark:grayscale"
             />
           </div>

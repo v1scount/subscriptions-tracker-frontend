@@ -77,7 +77,9 @@ export function SigninForm({ className, ...props }: React.ComponentProps<"div">)
             <Image
               src="/signin_image.jpg"
               alt="Sign in background"
+              sizes="(max-width: 1024px) 100vw, (max-width: 1920px) 50vw, 33vw"
               fill
+              loading="eager"
               className="absolute inset-0 object-cover dark:brightness-[0.2] dark:grayscale"
             />
           </div>
