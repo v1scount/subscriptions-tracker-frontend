@@ -22,11 +22,20 @@
         "name": "next"
       }
     ],
-    "baseUrl": "src/",
+    "baseUrl": ".",
     "paths": {
       "@/*": [
+        "./src/*",
         "./*"
       ],
+      "@components/*": [
+        "./components/*",
+        "./src/components/*"
+      ],
+      "@public/*": [
+        "./public/*",
+        "./src/public/*"
+      ]
     }
   },
   "include": [
