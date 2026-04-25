@@ -1,3 +1,5 @@
+"use client"
+
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -5,31 +7,42 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Image from "next/image"
 
-export function SignupForm({ className, ...props }: React.ComponentProps<"div">) {
+import { useActionState } from "react"
+import { signUpAction } from "@/app/actions/auth-actions"
+
+export function SignupForm({ className, lang = 'en', ...props }: React.ComponentProps<"div"> & { lang?: string }) {
+  const [state, action, isPending] = useActionState(signUpAction, null)
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <form action={action} className="p-6 md:p-8">
+            <input type="hidden" name="lang" value={lang} />
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-2xl font-bold">Create an account</h1>
                 <p className="text-balance text-muted-foreground">Sign up for your Acme Inc account</p>
               </div>
+              {state?.error && (
+                <div className="bg-destructive/15 text-destructive text-sm p-3 rounded-md">
+                  {state.error}
+                </div>
+              )}
               <div className="grid gap-2">
                 <Label htmlFor="name">Full Name</Label>
-                <Input id="name" type="text" placeholder="John Doe" required />
+                <Input id="name" name="name" type="text" placeholder="John Doe" required />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="m@example.com" required />
+                <Input id="email" name="email" type="email" placeholder="m@example.com" required />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="password">Password</Label>
-                <Input id="password" type="password" required />
+                <Input id="password" name="password" type="password" required />
               </div>
-              <Button type="submit" className="w-full">
-                Sign up
+              <Button type="submit" className="w-full" disabled={isPending}>
+                {isPending ? "Creating account..." : "Sign up"}
               </Button>
               <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
                 <span className="relative z-10 bg-background px-2 text-muted-foreground">Or continue with</span>

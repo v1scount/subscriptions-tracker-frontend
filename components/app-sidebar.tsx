@@ -1,4 +1,4 @@
-"use client"
+
 
 import Link from "next/link"
 import {
@@ -14,22 +14,31 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { Home, Settings } from "lucide-react"
+import { getDictionary, Locale } from "@/app/[lang]/dictionaries"
 
-// Example menu items
+
+
+export async function AppSidebar({ params }: { params: Promise<{ lang: Locale }> }) {
+
+  const { lang } = await params;
+
+  // Load the corresponding dictionary (en.json or es.json)
+  const dict = await getDictionary(lang);
+
+  // Example menu items
 const items = [
   {
-    title: "Dashboard",
+    title: dict.navigation.dashboard,
     url: "/dashboard",
     icon: Home,
   },
   {
-    title: "Settings",
+    title: dict.navigation.settings,
     url: "/dashboard/settings",
     icon: Settings,
   },
 ]
 
-export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader>
