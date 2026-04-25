@@ -1,0 +1,27 @@
+{
+    "navigation": {
+        "dashboard": "Panel",
+        "settings": "Ajustes",
+        "logout": "Cerrar sesión"
+    },
+    "signin": {
+        "title": "Inicia sesión en tu cuenta",
+        "email": "Correo electrónico",
+        "password": "Contraseña",
+        "forgot_password": "¿Olvidaste tu contraseña?",
+        "signin": "Iniciar sesión",
+        "or_continue_with": "O continúa con",
+        "already_have_account": "¿Ya tienes una cuenta?",
+        "signup": "Registrarse"
+    },
+    "signup": {
+        "title": "Crea una cuenta",
+        "name": "Nombre completo",
+        "email": "Correo electrónico",
+        "password": "Contraseña",
+        "signup": "Registrarse",
+        "or_continue_with": "O continúa con",
+        "already_have_account": "¿Ya tienes una cuenta?",
+        "signin": "Iniciar sesión"
+    }
+}

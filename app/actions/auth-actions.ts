@@ -3,80 +3,67 @@
 import { apiFetch } from "@/lib/api";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { z } from "zod";
+import { signUpSchema, signInSchema } from "@/schemas";
 
-const signUpSchema = z.object({
-  email: z.email({ message: "Invalid email address" }),
-  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
-  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
-});
-
-const signInSchema = z.object({
-  email: z.email({ message: "Invalid email address" }),
-  password: z.string().min(1, { message: "Password is required" }),
-});
+import { signIn } from "@/auth";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 
 export async function signUpAction(prevState: any, formData: FormData) {
-  const validatedFields = signUpSchema.safeParse({
-    email: formData.get('email'),
-    password: formData.get('password'),
-    name: formData.get('name'),
-  });
+  const validatedFields = signUpSchema.safeParse(Object.fromEntries(formData.entries()));
 
   if (!validatedFields.success) {
     return { error: validatedFields.error.issues[0].message };
   }
 
   const { email, password, name } = validatedFields.data;
+  const lang = formData.get('lang') as string || 'en';
 
   try {
-    const result = await apiFetch<{ access_token: string }>('/auth/signup', {
+
+    // 1. Create the user in the backend
+    await apiFetch('/auth/signup', {
       method: 'POST',
-      body: JSON.stringify({ email, password, name }),
+      body: JSON.stringify({ user: { email, password, name } }),
     });
 
-    (await cookies()).set('auth_token', result.access_token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
-      maxAge: 60 * 60 * 24 * 7,
+    // 2. Sign in the user automatically
+    await signIn("credentials", {
+      email,
+      password,
+      redirectTo: `/${lang}/dashboard`,
     });
   } catch (error: any) {
-    return { error: error.message };
+    // Auth.js signIn() redirects by throwing a special error — rethrow it
+    if (isRedirectError(error)) throw error;
+    if (error.type === 'CredentialsSignin') {
+      return { error: 'Invalid credentials.' };
+    }
+    return { error: error.message || "Something went wrong" };
   }
-
-  redirect('/dashboard');
 }
 
 export async function signInAction(prevState: any, formData: FormData) {
-  const validatedFields = signInSchema.safeParse({
-    email: formData.get('email'),
-    password: formData.get('password'),
-  });
+  const validatedFields = signInSchema.safeParse(Object.fromEntries(formData.entries()));
 
   if (!validatedFields.success) {
     return { error: validatedFields.error.issues[0].message };
   }
 
   const { email, password } = validatedFields.data;
+  const lang = formData.get('lang') as string || 'en';
 
   try {
-    const result = await apiFetch<{ access_token: string }>('/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({ email, password }),
-    });
-
-    (await cookies()).set('auth_token', result.access_token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
-      maxAge: 60 * 60 * 24 * 7,
+    await signIn("credentials", {
+      email,
+      password,
+      redirectTo: `/${lang}/dashboard`,
     });
   } catch (error: any) {
-    return { error: error.message };
+    // Auth.js signIn() redirects by throwing a special error — rethrow it
+    if (isRedirectError(error)) throw error;
+    if (error.type === 'CredentialsSignin') {
+      return { error: 'Invalid credentials.' };
+    }
+    throw error;
   }
-
-  redirect('/dashboard');
 }

@@ -1,0 +1,27 @@
+{
+    "navigation": {
+        "dashboard": "Dashboard",
+        "settings": "Settings",
+        "logout": "Logout"
+    },
+    "signin": {
+        "title": "Sign in to your account",
+        "email": "Email",
+        "password": "Password",
+        "forgot_password": "Forgot your password?",
+        "signin": "Sign in",
+        "or_continue_with": "Or continue with",
+        "already_have_account": "Already have an account?",
+        "signup": "Sign up"
+    },
+    "signup": {
+        "title": "Create an account",
+        "name": "Full Name",
+        "email": "Email",
+        "password": "Password",
+        "signup": "Sign up",
+        "or_continue_with": "Or continue with",
+        "already_have_account": "Already have an account?",
+        "signin": "Sign in"
+    }
+}
