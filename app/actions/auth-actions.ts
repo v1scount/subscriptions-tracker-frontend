@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { signUpSchema, signInSchema } from "@/schemas";
 
-import { signIn } from "@/auth";
+import { signIn, signOut } from "@/auth";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 
 export async function signUpAction(prevState: any, formData: FormData) {
@@ -66,4 +66,8 @@ export async function signInAction(prevState: any, formData: FormData) {
     }
     throw error;
   }
+}
+
+export async function signOutAction() {
+  await signOut({ redirectTo: "/" });
 }

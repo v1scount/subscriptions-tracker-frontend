@@ -13,7 +13,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { Home, Settings } from "lucide-react"
+import { Home, Settings, LogOut } from "lucide-react"
+import { signOutAction } from "@/app/actions/auth-actions"
 import { getDictionary, Locale } from "@/app/[lang]/dictionaries"
 
 
@@ -65,7 +66,18 @@ const items = [
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter />
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <form action={signOutAction}>
+              <SidebarMenuButton type="submit">
+                <LogOut />
+                <span>{dict.navigation.logout}</span>
+              </SidebarMenuButton>
+            </form>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   )
 }
