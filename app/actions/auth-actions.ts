@@ -3,47 +3,63 @@
 import { apiFetch } from "@/lib/api";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { z } from "zod";
 
-/**
- * Server Action for signing up a new user.
- * It connects to the NestJS backend and sets a session cookie upon success.
- */
+const signUpSchema = z.object({
+  email: z.email({ message: "Invalid email address" }),
+  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
+});
+
+const signInSchema = z.object({
+  email: z.email({ message: "Invalid email address" }),
+  password: z.string().min(1, { message: "Password is required" }),
+});
+
 export async function signUpAction(prevState: any, formData: FormData) {
-  const email = formData.get('email');
-  const password = formData.get('password');
-  const name = formData.get('name');
+  const validatedFields = signUpSchema.safeParse({
+    email: formData.get('email'),
+    password: formData.get('password'),
+    name: formData.get('name'),
+  });
+
+  if (!validatedFields.success) {
+    return { error: validatedFields.error.issues[0].message };
+  }
+
+  const { email, password, name } = validatedFields.data;
 
   try {
-    // 1. Call your NestJS backend
     const result = await apiFetch<{ access_token: string }>('/auth/signup', {
       method: 'POST',
       body: JSON.stringify({ email, password, name }),
     });
 
-    // 2. Set the JWT in an HTTP-only cookie
-    // This is secure and can't be accessed by client-side JS
     (await cookies()).set('auth_token', result.access_token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
-      maxAge: 60 * 60 * 24 * 7, // 1 week
+      maxAge: 60 * 60 * 24 * 7,
     });
-
   } catch (error: any) {
     return { error: error.message };
   }
 
-  // 3. Redirect to dashboard or home upon success
   redirect('/dashboard');
 }
 
-/**
- * Server Action for signing in.
- */
 export async function signInAction(prevState: any, formData: FormData) {
-  const email = formData.get('email');
-  const password = formData.get('password');
+  const validatedFields = signInSchema.safeParse({
+    email: formData.get('email'),
+    password: formData.get('password'),
+  });
+
+  if (!validatedFields.success) {
+    return { error: validatedFields.error.issues[0].message };
+  }
+
+  const { email, password } = validatedFields.data;
 
   try {
     const result = await apiFetch<{ access_token: string }>('/auth/login', {
@@ -58,7 +74,6 @@ export async function signInAction(prevState: any, formData: FormData) {
       path: '/',
       maxAge: 60 * 60 * 24 * 7,
     });
-
   } catch (error: any) {
     return { error: error.message };
   }

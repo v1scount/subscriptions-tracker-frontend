@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Open_Sans, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Providers from "./providers";
 
 const openSans = Open_Sans({
   variable: "--font-open-sans",
@@ -29,7 +30,11 @@ export default function RootLayout({
       className={`${openSans.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className={`${openSans.className} min-h-full flex flex-col`}>{children}</body>
+      <body className={`${openSans.className} min-h-full flex flex-col`}>
+        <Providers>
+          {children}
+        </Providers>
+      </body>
     </html>
   );
 }
