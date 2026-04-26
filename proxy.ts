@@ -45,14 +45,21 @@ export const proxy = auth((request) => {
     return NextResponse.redirect(request.nextUrl);
   }
 
-  // 3. Authentication logic
+  // 3. Authentication and Authorization logic
   // The session is available as request.auth
   const isLoggedIn = !!request.auth;
+  const isAdmin = request.auth?.user?.role === "admin";
   const isDashboardRoute = pathname.includes("/dashboard");
+  const isAdminRoute = pathname.includes("/dashboard/admin");
   const isAuthRoute = pathname.includes("/auth");
 
   // We can extract the locale from the pathname since we know it has one at this point
   const locale = pathname.split("/")[1];
+
+  // Redirect non-admin users trying to access admin routes
+  if (isAdminRoute && !isAdmin) {
+    return NextResponse.redirect(new URL(`/${locale}/dashboard`, request.nextUrl));
+  }
 
   // Redirect to signin if accessing dashboard while logged out
   if (isDashboardRoute && !isLoggedIn) {
