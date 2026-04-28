@@ -13,30 +13,48 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { Home, Settings, LogOut } from "lucide-react"
+import { Home, Settings, LogOut, LayoutGrid, Shield } from "lucide-react"
 import { signOutAction } from "@/app/actions/auth-actions"
 import { getDictionary, Locale } from "@/app/[lang]/dictionaries"
+import { auth } from "@/auth"
 
 
 
 export async function AppSidebar({ params }: { params: Promise<{ lang: Locale }> }) {
 
   const { lang } = await params;
+  const session = await auth();
+  const isAdmin = session?.user?.role === "admin";
+  console.log(session);
 
   // Load the corresponding dictionary (en.json or es.json)
   const dict = await getDictionary(lang);
 
-  // Example menu items
-const items = [
+  // Main menu items
+const mainItems = [
   {
     title: dict.navigation.dashboard,
     url: "/dashboard",
     icon: Home,
   },
   {
+    title: dict.navigation.subscriptions || "Subscriptions",
+    url: "/dashboard/subscriptions",
+    icon: LayoutGrid,
+  },
+  {
     title: dict.navigation.settings,
     url: "/dashboard/settings",
     icon: Settings,
+  },
+]
+
+// Admin menu items
+const adminItems = [
+  {
+    title: dict.navigation.catalog || "Catalog",
+    url: "/dashboard/admin/catalog",
+    icon: Shield,
   },
 ]
 
@@ -49,22 +67,41 @@ const items = [
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Menu</SidebarGroupLabel>
+          <SidebarGroupLabel>{dict.navigation.menu || "Menu"}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
+              {mainItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.url}>
+                  <Link href={item.url} className="w-full">
+                    <SidebarMenuButton>
                       <item.icon />
                       <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
+                    </SidebarMenuButton>
+                  </Link>
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+        {isAdmin && (
+          <SidebarGroup>
+            <SidebarGroupLabel>{dict.navigation.admin || "Admin"}</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {adminItems.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <Link href={item.url} className="w-full">
+                      <SidebarMenuButton>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </SidebarMenuButton>
+                    </Link>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>

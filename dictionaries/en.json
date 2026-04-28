@@ -1,8 +1,42 @@
 {
     "navigation": {
+        "menu": "Menu",
         "dashboard": "Dashboard",
+        "subscriptions": "Subscriptions",
         "settings": "Settings",
+        "admin": "Admin",
+        "catalog": "Catalog",
         "logout": "Logout"
+    },
+    "admin": {
+        "catalog": {
+            "title": "Subscription Catalog",
+            "description": "Manage subscription types and services available to users",
+            "addEntry": "Add Entry",
+            "editEntry": "Edit Entry",
+            "createEntry": "Create Entry",
+            "serviceName": "Service Name",
+            "category": "Category",
+            "price": "Price",
+            "currency": "Currency",
+            "billingCycle": "Billing Cycle",
+            "description": "Description",
+            "logoUrl": "Logo URL",
+            "status": "Status",
+            "active": "Active",
+            "inactive": "Inactive",
+            "actions": "Actions",
+            "saveChanges": "Save Changes",
+            "delete": "Delete",
+            "deleteConfirm": "Are you sure?",
+            "deleteDescription": "This will permanently delete the catalog entry. This action cannot be undone.",
+            "cancel": "Cancel",
+            "search": "Search catalog entries...",
+            "weekly": "Weekly",
+            "monthly": "Monthly",
+            "quarterly": "Quarterly",
+            "yearly": "Yearly"
+        }
     },
     "signin": {
         "title": "Sign in to your account",

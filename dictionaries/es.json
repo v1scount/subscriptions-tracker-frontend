@@ -1,8 +1,42 @@
 {
     "navigation": {
+        "menu": "Menú",
         "dashboard": "Panel",
+        "subscriptions": "Suscripciones",
         "settings": "Ajustes",
+        "admin": "Administración",
+        "catalog": "Catálogo",
         "logout": "Cerrar sesión"
+    },
+    "admin": {
+        "catalog": {
+            "title": "Catálogo de Suscripciones",
+            "description": "Gestionar tipos de suscripción y servicios disponibles para usuarios",
+            "addEntry": "Agregar Entrada",
+            "editEntry": "Editar Entrada",
+            "createEntry": "Crear Entrada",
+            "serviceName": "Nombre del Servicio",
+            "category": "Categoría",
+            "price": "Precio",
+            "currency": "Moneda",
+            "billingCycle": "Ciclo de Facturación",
+            "description": "Descripción",
+            "logoUrl": "URL del Logo",
+            "status": "Estado",
+            "active": "Activo",
+            "inactive": "Inactivo",
+            "actions": "Acciones",
+            "saveChanges": "Guardar Cambios",
+            "delete": "Eliminar",
+            "deleteConfirm": "¿Estás seguro?",
+            "deleteDescription": "Esto eliminará permanentemente la entrada del catálogo. Esta acción no se puede deshacer.",
+            "cancel": "Cancelar",
+            "search": "Buscar entradas...",
+            "weekly": "Semanal",
+            "monthly": "Mensual",
+            "quarterly": "Trimestral",
+            "yearly": "Anual"
+        }
     },
     "signin": {
         "title": "Inicia sesión en tu cuenta",
