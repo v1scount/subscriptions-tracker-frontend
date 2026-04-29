@@ -2,7 +2,8 @@
     "navigation": {
         "dashboard": "Panel",
         "settings": "Ajustes",
-        "logout": "Cerrar sesión"
+        "logout": "Cerrar sesión",
+        "subscriptions": "Suscripciones"
     },
     "signin": {
         "title": "Inicia sesión en tu cuenta",
@@ -23,5 +24,23 @@
         "or_continue_with": "O continúa con",
         "already_have_account": "¿Ya tienes una cuenta?",
         "signin": "Iniciar sesión"
+    },
+    "dashboard": {
+        "no_subscriptions_yet": "Aún no tienes suscripciones",
+        "add_new_subscription": "Agregar Nueva Suscripción",
+        "track_subscription_description": "Selecciona un servicio del catálogo para comenzar a rastrear tu suscripción.",
+        "service_label": "Servicio",
+        "select_service_placeholder": "Seleccionar un servicio",
+        "loading_services": "Cargando servicios...",
+        "plan_label": "Plan",
+        "billing_cycle_label": "Ciclo de Facturación",
+        "next_billing_date_label": "Próxima Fecha de Cobro",
+        "notification_hint": "Te notificaremos antes de esta fecha.",
+        "cancel": "Cancelar",
+        "confirm_track": "Confirmar y Rastrear",
+        "tracking": "Rastreando...",
+        "toast_success": "Rastreando exitosamente {{service}}",
+        "toast_error": "Error al rastrear la suscripción: {{message}}",
+        "toast_required_fields": "Por favor completa todos los campos requeridos"
     }
 }

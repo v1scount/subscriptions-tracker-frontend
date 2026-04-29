@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Open_Sans, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import Providers from "../providers";
+import { auth } from "@/auth";
+
+import { getDictionary, Locale } from "./dictionaries";
 
 const openSans = Open_Sans({
   variable: "--font-open-sans",
@@ -24,9 +27,17 @@ export default async function RootLayout({
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: Promise<{ lang: string }>;
+  params: Promise<{ lang: Locale }>;
 }>) {
   const { lang } = await params;
+<<<<<<< ours
+  const session = await auth();
+  const dictionary = await getDictionary(lang);
+
+||||||| ancestor
+
+=======
+>>>>>>> theirs
   return (
     <html
       lang={lang}
@@ -34,7 +45,7 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body className={`${openSans.className} min-h-full flex flex-col`}>
-        <Providers>
+        <Providers session={session} dictionary={dictionary}>
           {children}
         </Providers>
       </body>

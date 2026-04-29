@@ -8,6 +8,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
  * A wrapper around the native fetch API to handle common NestJS request patterns.
  */
 export async function apiFetch<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
+  console.log(`[apiFetch] ${options.method || 'GET'} ${endpoint}`);
   const url = `${API_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
   
   const headers = new Headers(options.headers);
@@ -18,6 +19,7 @@ export async function apiFetch<T>(endpoint: string, options: RequestInit = {}): 
   const response = await fetch(url, {
     ...options,
     headers,
+    cache: 'no-store',
   });
 
   // Handle non-OK responses
