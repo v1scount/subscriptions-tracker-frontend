@@ -16,17 +16,15 @@ import {
 import { Home, Settings, LogOut } from "lucide-react"
 import { signOutAction } from "@/app/actions/auth-actions"
 import { getDictionary, Locale } from "@/app/[lang]/dictionaries"
+import {auth} from "@/auth"
 
 
 
 export async function AppSidebar({ params }: { params: Promise<{ lang: Locale }> }) {
 
   const { lang } = await params;
-
-  // Load the corresponding dictionary (en.json or es.json)
   const dict = await getDictionary(lang);
 
-  // Example menu items
 const items = [
   {
     title: dict.navigation.dashboard,

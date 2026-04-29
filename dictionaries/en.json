@@ -2,7 +2,8 @@
     "navigation": {
         "dashboard": "Dashboard",
         "settings": "Settings",
-        "logout": "Logout"
+        "logout": "Logout",
+        "subscriptions": "Subscriptions"
     },
     "signin": {
         "title": "Sign in to your account",
@@ -23,5 +24,23 @@
         "or_continue_with": "Or continue with",
         "already_have_account": "Already have an account?",
         "signin": "Sign in"
+    },
+    "dashboard": {
+        "no_subscriptions_yet": "No subscriptions yet",
+        "add_new_subscription": "Add New Subscription",
+        "track_subscription_description": "Select a service from the catalog to start tracking your subscription.",
+        "service_label": "Service",
+        "select_service_placeholder": "Select a service",
+        "loading_services": "Loading services...",
+        "plan_label": "Plan",
+        "billing_cycle_label": "Billing Cycle",
+        "next_billing_date_label": "Next Billing Date",
+        "notification_hint": "We'll notify you before this date.",
+        "cancel": "Cancel",
+        "confirm_track": "Confirm & Track",
+        "tracking": "Tracking...",
+        "toast_success": "Successfully tracking {{service}}",
+        "toast_error": "Failed to track subscription: {{message}}",
+        "toast_required_fields": "Please fill all required fields"
     }
 }
