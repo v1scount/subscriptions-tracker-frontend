@@ -8,11 +8,17 @@ import { Label } from "@/components/ui/label"
 import Image from "next/image"
 
 
-import { useActionState } from "react"
+import { useActionState, useEffect } from "react"
 import { signInAction } from "@/app/actions/auth-actions"
 
 export function SigninForm({ className, lang = 'en', ...props }: React.ComponentProps<"div"> & { lang?: string }) {
   const [state, action, isPending] = useActionState(signInAction, null)
+
+  useEffect(() => {
+    if (state?.success && state?.redirectUrl) {
+      window.location.href = state.redirectUrl;
+    }
+  }, [state])
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>

@@ -2,7 +2,6 @@
 
 import { apiFetch } from "@/lib/api";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { signUpSchema, signInSchema } from "@/schemas";
 
 import { signIn, signOut } from "@/auth";
@@ -26,12 +25,14 @@ export async function signUpAction(prevState: any, formData: FormData) {
       body: JSON.stringify({ user: { email, password, name } }),
     });
 
-    // 2. Sign in the user automatically
+    // 2. Sign in the user without throwing a redirect
     await signIn("credentials", {
       email,
       password,
-      redirectTo: `/${lang}/dashboard`,
+      redirect: false,
     });
+
+    return { success: true, redirectUrl: `/${lang}/dashboard` };
   } catch (error: any) {
     // Auth.js signIn() redirects by throwing a special error — rethrow it
     if (isRedirectError(error)) throw error;
@@ -56,8 +57,9 @@ export async function signInAction(prevState: any, formData: FormData) {
     await signIn("credentials", {
       email,
       password,
-      redirectTo: `/${lang}/dashboard`,
+      redirect: false,
     });
+    return { success: true, redirectUrl: `/${lang}/dashboard` };
   } catch (error: any) {
     // Auth.js signIn() redirects by throwing a special error — rethrow it
     if (isRedirectError(error)) throw error;
